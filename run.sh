@@ -1,0 +1,1 @@
+echo docker run -i -t --rm --link postgres-osm:pg -v ~/Repositories/Docker/data/osm_import:/osm jwdanielgis/osm2pgsql -c 'osm2pgsql --create --slim --cache 2000 --database $PG_ENV_OSM_DB --username $PG_ENV_OSM_USER --host pg --port $PG_PORT_5432_TCP_PORT /osm/algeria-latest.osm.pbf'
