@@ -1,10 +1,8 @@
 # DOCKER-VERSION 1.5.0
 # VERSION 0.2
 
-FROM debian:wheezy
-MAINTAINER James Badger <james@jamesbadger.ca>
-
-ENV DEBIAN_FRONTEND noninteractive
+FROM ubuntu:14.04
+MAINTAINER John Daniel <jwdaniel@uw.edu>
 
 RUN apt-get update && apt-get install -y \
     autoconf \
@@ -43,4 +41,8 @@ RUN mkdir src &&\
     cd /root &&\
     rm -rf src
 
-CMD ["/bin/bash", "-c", "/usr/local/bin/osm2pgsql --create --slim --cache 2000 --database $PG_ENV_OSM_DB --username $PG_ENV_OSM_USER --host pg --port $PG_PORT_5432_TCP_PORT /osm/import.osm.pbf"]
+# This is about as clever as it gets. It is apparently impossible to
+# specify both environment variables and command-line arguments at the 
+# same time. So this container just runs bash and the import command must
+# be fully specified on the command line.
+ENTRYPOINT ["/bin/bash"]
